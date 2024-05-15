@@ -4,7 +4,7 @@ import ButtonBox from "./components/ButtonBox";
 import Button from "./components/Button";
 import React,{useState} from "react";
 
-const btnValues = [
+const btnValues = [         //values are enumerated array
   ["C", "+-", "%", "/"],
   [7, 8, 9, "X"],
   [4, 5, 6, "-"],
@@ -13,27 +13,27 @@ const btnValues = [
 ];
 
 const toLocaleString = (num) =>
-  String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, "$1 ");
+  String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, "$1 ");  //format to convert to str
 
-const removeSpaces = (num) => num.toString().replace(/\s/g, "");
+const removeSpaces = (num) => num.toString().replace(/\s/g, "");      //space clear to avoid errs
 
 const App = () => {
 
-  let [calc,setCalc] = useState({
+  let [calc,setCalc] = useState({             //use state and basic format
     sign: "",
     num: 0,
     res: 0
   })
 
-  const numClickHandler = (e) => {
-    e.preventDefault();
+  const numClickHandler = (e) => {        //e is event
+    e.preventDefault();                   //prevent default execution, err handling
     const value = e.target.innerHTML;
 
     if (removeSpaces(calc.num).length < 16) {
       setCalc({
         ...calc,
         num:
-          calc.num === 0 && value === "0"
+          calc.num === 0 && value === "0"             //repeated ternary operator
             ? "0"
             : removeSpaces(calc.num) % 1 === 0
             ? toLocaleString(Number(removeSpaces(calc.num + value)))
@@ -43,7 +43,7 @@ const App = () => {
     }
   };
 
-  const commaClickHandler = (e) => {
+  const dotClickHandler = (e) => {
     e.preventDefault();
     const value = e.target.innerHTML;
 
@@ -58,7 +58,6 @@ const App = () => {
     const value = e.target.innerHTML;
 
     setCalc({
-      ...calc,
       sign: value,
       res: !calc.res && calc.num ? calc.num : calc.res,
       num: 0,
@@ -67,7 +66,7 @@ const App = () => {
 
   const equalsClickHandler = () => {
     if (calc.sign && calc.num) {
-      const math = (a, b, sign) =>
+      const math = (a, b, sign) => 
         sign === "+"
           ? a + b
           : sign === "-"
@@ -77,9 +76,8 @@ const App = () => {
           : a / b;
 
       setCalc({
-        ...calc,
         res:
-          calc.num === "0" && calc.sign === "/"
+          calc.num === "0" && calc.sign === "/"       //more err handling
             ? "Can't divide with 0"
             : toLocaleString(
                 math(
@@ -96,7 +94,6 @@ const App = () => {
 
   const invertClickHandler = () => {
     setCalc({
-      ...calc,
       num: calc.num ? toLocaleString(removeSpaces(calc.num) * -1) : 0,
       res: calc.res ? toLocaleString(removeSpaces(calc.res) * -1) : 0,
       sign: "",
@@ -108,16 +105,14 @@ const App = () => {
     let res = calc.res ? parseFloat(removeSpaces(calc.res)) : 0;
 
     setCalc({
-      ...calc,
-      num: (num /= Math.pow(100, 1)),
-      res: (res /= Math.pow(100, 1)),
+      num: (num /= 100),
+      res: (res /= 100),
       sign: "",
     });
   };
 
   const resetClickHandler = () => {
     setCalc({
-      ...calc,
       sign: "",
       num: 0,
       res: 0,
@@ -132,9 +127,9 @@ const App = () => {
           return (
             <Button
               key={i}
-              className={btn === "=" ? "equals" : ""}
-              value={btn}
-              onClick={
+              className={btn === "=" ? "equals" : ""}   //1
+              value={btn}                               //2
+              onClick={                                 //3 vales passed
                 btn === "C"
                   ? resetClickHandler
                   : btn === "+-"
@@ -146,8 +141,8 @@ const App = () => {
                   : btn === "/" || btn === "X" || btn === "-" || btn === "+"
                   ? signClickHandler
                   : btn === "."
-                  ? commaClickHandler
-                  : numClickHandler
+                  ? dotClickHandler
+                  : numClickHandler   //if nothing else numclick
               }
             />
           );

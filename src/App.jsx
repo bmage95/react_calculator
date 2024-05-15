@@ -29,7 +29,7 @@ const App = () => {
     e.preventDefault();                   //prevent default execution, err handling
     const value = e.target.innerHTML;
 
-    if (removeSpaces(calc.num).length < 16) {
+    if (removeSpaces(calc.num).length < 16) {     //max length 16
       setCalc({
         ...calc,
         num:
@@ -49,7 +49,7 @@ const App = () => {
 
     setCalc({
       ...calc,
-      num: !calc.num.toString().includes(".") ? calc.num + value : calc.num,
+      num: !calc.num.toString().includes(".") ? calc.num + value : calc.num,  //checking if . already exists
     });
   };
 
@@ -64,7 +64,7 @@ const App = () => {
     });
   };
 
-  const equalsClickHandler = () => {
+  const equalsClickHandler = () => {    //checks set values
     if (calc.sign && calc.num) {
       const math = (a, b, sign) => 
         sign === "+"
@@ -92,7 +92,7 @@ const App = () => {
     }
   };
 
-  const invertClickHandler = () => {
+  const invertClickHandler = () => {    //inverts sign else nothing
     setCalc({
       num: calc.num ? toLocaleString(removeSpaces(calc.num) * -1) : 0,
       res: calc.res ? toLocaleString(removeSpaces(calc.res) * -1) : 0,
@@ -100,7 +100,7 @@ const App = () => {
     });
   };
 
-  const percentClickHandler = () => {
+  const percentClickHandler = () => {     //DIVIDE BY 100 CONVERT TO %
     let num = calc.num ? parseFloat(removeSpaces(calc.num)) : 0;
     let res = calc.res ? parseFloat(removeSpaces(calc.res)) : 0;
 
@@ -111,7 +111,7 @@ const App = () => {
     });
   };
 
-  const resetClickHandler = () => {
+  const resetClickHandler = () => {  
     setCalc({
       sign: "",
       num: 0,

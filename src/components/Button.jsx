@@ -1,6 +1,6 @@
 import "./Button.css";
 
-const Button = ({ className, value, onClick }) => {
+const Button = ({ className, value, onClick }) => {   //three conditions passed
   return (
     <button className={className} onClick={onClick}>
       {value}

@@ -1,9 +1,9 @@
 import { Textfit } from "react-textfit";
 import "./Screen.css";
 
-const Screen = ({ value }) => {
+const Screen = ({ value }) => { //max char
   return (
-    <Textfit className="screen" mode="single" max={70}>
+    <Textfit className="screen" mode="single" max={70}>   
       {value}
     </Textfit>
   );
